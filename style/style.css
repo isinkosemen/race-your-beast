@@ -1,0 +1,146 @@
+/*Choose your beast screen*/
+.text {
+  text-align: center;
+  margin: 100px;
+  display: block;
+  font-size: 60px;
+}
+
+.beasts {
+  display: flex;
+  align-content: center;
+}
+
+.beast2 {
+  margin-top: -20px;
+}
+
+.beast3 {
+  margin-top: -30px;
+}
+
+.movedown {
+  transform: rotate(360deg);
+  transition-duration: 20s;
+}
+
+.moveup {
+  transform: translate(0px, 50px);
+}
+
+/*Game screen 1*/
+.game-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 55px;
+}
+
+.background-image-level1 {
+  width: 48%;
+  height: 48%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  position: fixed;
+}
+
+.background-image-level2 {
+  width: 48%;
+  height: 48%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  position: fixed;
+}
+
+.background-image-level3 {
+  width: 48%;
+  height: 48%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  position: fixed;
+}
+
+.background-image-level4 {
+  width: 48%;
+  height: 48%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  position: fixed;
+}
+
+#startButton {
+  background-color: red;
+  border: none;
+  color: white;
+  padding: 20px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 32px;
+  margin-top: 20px;
+}
+
+#timer {
+  font-size: 30px;
+}
+
+.player-image {
+  width: 20% !important;
+  height: 20% !important;
+  position: absolute !important;
+}
+
+.obstacle-image {
+  width: 10% !important;
+  height: 20% !important;
+  position: absolute !important;
+}
+
+#obstacle1 {
+  left: 600px;
+  top: 500px;
+}
+
+#obstacle2 {
+  left: 900px;
+  top: 590px;
+}
+
+#obstacle3 {
+  left: 1100px;
+  top: 500px;
+}
+
+#obstacle4 {
+  left: 1300px;
+  top: 400px;
+}
+
+#obstacle5 {
+  left: 1200px;
+  top: 200px;
+}
+
+#obstacle6 {
+  left: 830px;
+  top: 200px;
+}
+
+#obstacle7 {
+  left: 770px;
+  top: -25px;
+}
+
+#obstacle8 {
+  left: 570px;
+  top: -25px;
+}
+
+#obstacle9 {
+  left: 570px;
+  top: 120px;
+}
