@@ -1,23 +1,24 @@
-const beast1 = document.getElementById("beast1");
-const beast2 = document.getElementById("beast2");
-const beast3 = document.getElementById("beast3");
-const beast4 = document.getElementById("beast4");
-
-beast1.addEventListener("click", () => {
-  window.location.href = "level1.html?beast=beast1";
-});
-
-beast2.addEventListener("click", () => {
-  window.location.href = "level1.html?beast=beast2";
-});
-beast3.addEventListener("click", () => {
-  window.location.href = "level1.html?beast=beast3";
-});
-beast4.addEventListener("click", () => {
-  window.location.href = "level1.html?beast=beast4";
-});
-
-
-const distinctCountries = Array.from(new Set(nuclearPowerPlantsWorldwide.map((d) => d.Country)));
-const countryText = Array.from(new Set(nuclearPowerPlantsWorldwide.map((d) => d.Country))).length === 1 ? "country" : "countries";
-
+class BeastSelector {
+    constructor() {
+      this.beast1 = document.getElementById("beast1");
+      this.beast2 = document.getElementById("beast2");
+      this.beast3 = document.getElementById("beast3");
+      this.beast4 = document.getElementById("beast4");
+  
+      this.setupEventListeners();
+    }
+  
+    setupEventListeners() {
+      this.beast1.addEventListener("click", () => this.selectBeast("beast1"));
+      this.beast2.addEventListener("click", () => this.selectBeast("beast2"));
+      this.beast3.addEventListener("click", () => this.selectBeast("beast3"));
+      this.beast4.addEventListener("click", () => this.selectBeast("beast4"));
+    }
+  
+    selectBeast(beast) {
+      window.location.href = `level1.html?beast=${beast}`;
+    }
+  }
+  
+  const beastSelector = new BeastSelector();
+  
