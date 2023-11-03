@@ -34,15 +34,6 @@
   margin-top: -30px;
 }
 
-.movedown {
-  transition-duration: 1s;
-}
-
-.moveup {
-  transform: translate(0px, 20%);
-  transition-duration: 1s;
-}
-
 /*Game screen 1*/
 .game-container {
   display: flex;
@@ -88,26 +79,26 @@
 }
 
 #startButton {
-  background-color: red;
-  border: none;
-  color: white;
-  padding: 20px 32px;
-  text-align: center;
-  text-decoration: none;
   display: inline-block;
-  font-size: 32px;
-  margin-top: 20px;
+  padding: 15px 30px; /* Increased padding for a larger button */
+  background: linear-gradient(45deg, #e91e63, #ff5722);
+  color: #fff;
+  border: none;
+  border-radius: 10px; /* Increased border radius for rounded corners */
+  cursor: pointer;
+  font-size: 18px; /* Increased font size for larger text */
+  transition: background 0.3s;
 }
 
 #timer {
-  font-size: 30px;
+  font-size: 40px;
 }
 
 #startTimer {
-    font-size: 50px;
-    margin-top: 10%;
-    margin-left: 10%;
-  }
+  font-size: 50px;
+  margin-top: 10%;
+  margin-left: 10%;
+}
 
 #player {
   width: 20% !important;
@@ -115,10 +106,14 @@
   position: absolute !important;
 }
 
+.hidden {
+  display: none;
+}
+
 .obstacle-image {
-  width: 10% !important;
-  height: 20% !important;
-  position: absolute !important;
+  width: 10%;
+  height: 20%;
+  position: absolute;
 }
 
 #obstacle1 {
@@ -209,8 +204,8 @@
   border-width: 10px;
   margin-top: 2%;
   margin-bottom: 2%;
-  margin-left: 20%;
-  margin-right: 20%;
+  margin-left: 30%;
+  margin-right: 30%;
 }
 
 .beast-images-container-1 {
@@ -226,53 +221,64 @@
 }
 
 #startGameButton {
-  background-color: red;
-  border: none;
-  color: white;
-  padding: 20px 32px;
-  text-align: center;
-  text-decoration: none;
   display: inline-block;
-  font-size: 32px;
-  margin-top: 20px;
+  padding: 15px 30px; /* Increased padding for a larger button */
+  background: linear-gradient(45deg, #e91e63, #ff5722);
+  color: #fff;
+  border: none;
+  border-radius: 10px; /* Increased border radius for rounded corners */
+  cursor: pointer;
+  font-size: 18px; /* Increased font size for larger text */
+  transition: background 0.3s;
 }
 
 #beast-icon {
-    border: solid;
-    border-color: black;
-  }
-  
-  .introduce-beast1,
-  .introduce-beast2,
-  .introduce-beast3,
-  .introduce-beast4 {
-    border: solid;
-    border-color: red;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    font-size: 30px;
-    align-items: center;
-    justify-content: center;
-    margin: 5px !important; /* Reduce the margin between containers */
-    padding: 5px !important; /* Add padding to the containers for spacing */
-    height: 500px; /* Fixed height for the containers */
-  }
-  
-  .choose-your-beast-container {
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
-  }
-  
-  .beast-description {
-    width: 300px;
-  }
-  
-  .introduce-beast1:hover,
-  .introduce-beast2:hover,
-  .introduce-beast3:hover,
-  .introduce-beast4:hover {
-    background-color: gray;
-    cursor: pointer;
-  }
+  margin-top: -5px;
+}
+
+.introduce-beast1,
+.introduce-beast2,
+.introduce-beast3,
+.introduce-beast4 {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  font-size: 30px;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  width: 320px;
+}
+
+.choose-your-beast-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+
+.beast-description {
+  width: 300px;
+}
+
+.introduce-beast1:hover,
+.introduce-beast2:hover,
+.introduce-beast3:hover,
+.introduce-beast4:hover {
+  background-color: gray;
+  cursor: pointer;
+}
+
+#congratulationsRestartButton,
+#gameOverRestartButton {
+  display: inline-block;
+  padding: 15px 30px; /* Increased padding for a larger button */
+  background: linear-gradient(45deg, #4caf50, #2196f3);
+  color: #fff;
+  border: none;
+  border-radius: 10px; /* Increased border radius for rounded corners */
+  cursor: pointer;
+  font-size: 18px; /* Increased font size for larger text */
+  transition: background 0.3s;
+  display: block;
+  margin: 0 auto;
+}
