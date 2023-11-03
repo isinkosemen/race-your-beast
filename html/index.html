@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <title>Race Your Beast!</title>
+    <link rel="stylesheet" href="/style/style.css" />
+  </head>
+  <body>
+    <!-- Section 1: Game Starting Page -->
+    <div id="game-start">
+      <div class="start-game-container">
+        <div class="text-start-game">RACE YOUR BEAST!</div>
+        <div class="beast-image-main-container">
+          <div class="beast-images-container-1">
+            <img src="../images/beast1.png" alt="Beast 1" width="40%" />
+            <div></div>
+            <img src="../images/beast3.png" alt="" width="30%" />
+          </div>
+          <div class="beast-images-container-2">
+            <img src="../images/beast2.png" alt="" width="30%" />
+            <img src="../images/beast4.png" alt="" width="40%" />
+          </div>
+        </div>
+        <button id="startGameButton">Start</button>
+      </div>
+    </div>
+    <!-- Section 2: Choose Your Beast Page -->
+    <div id="choose-your-beast">
+      <h1 class="text-choose-your-beast">Choose your beast!</h1>
+      <div class="choose-your-beast-container">
+        <div class="introduce-beast1" id="beast1">
+          <img
+            src="../images/introduce-beast-1.png"
+            alt=""
+            id="beast-icon"
+            width="85%"
+          />
+          <div class="beast1-name">FRED</div>
+          <div class="beast-description">
+            His stare sprint technique makes him the ideal candidate for the
+            race.
+          </div>
+        </div>
+        <div class="introduce-beast2" id="beast2">
+          <img
+            src="../images/introduce-beast-2.png"
+            alt=""
+            id="beast-icon"
+            width="85%"
+          />
+          <div class="beast2-name">CHONKY</div>
+          <div class="beast-description">
+            Her bread loaf move defies physics.
+            <br />
+            <br />
+            <br />
+          </div>
+        </div>
+        <div class="introduce-beast3" id="beast3">
+          <img
+            src="../images/introduce-beast-3.png"
+            alt=""
+            id="beast-icon"
+            width="85%"
+          />
+          <div class="beast3-name">WHITEY CHUNGUS</div>
+          <div class="beast-description">
+            She is a master of surprise, leaving spectators in stitches.
+            <br />
+            <br />
+          </div>
+        </div>
+        <div class="introduce-beast4" id="beast4">
+          <img
+            src="../images/introduce-beast-4.png"
+            alt=""
+            id="beast-icon"
+            width="85%"
+          />
+          <div class="beast4-name">KUNG-FU CHAD</div>
+          <div class="beast-description">
+            Her karate kick propels her to the front of the pack with unmatched
+            speed and precision.
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Section 3: Game Page (Level 1) -->
+    <div id="level1">
+      <div class="game-container">
+        <div class="background-image-level1">
+          <img src="../images/Level1.png" alt="" />
+          <div class="player-image">
+            <img src="../images/player1-image.png" alt="" id="player" />
+          </div>
+        </div>
+        <img
+          src="../images/obstacle.png"
+          class="obstacle-image hidden"
+          alt=""
+          id="obstacle1"
+        />
+        <img
+          src="../images/obstacle.png"
+          class="obstacle-image hidden"
+          alt=""
+          id="obstacle2"
+        />
+        <img
+          src="../images/obstacle.png"
+          class="obstacle-image hidden"
+          alt=""
+          id="obstacle3"
+        />
+        <img
+          src="../images/obstacle.png"
+          class="obstacle-image hidden"
+          alt=""
+          id="obstacle4"
+        />
+        <img
+          src="../images/obstacle.png"
+          class="obstacle-image hidden"
+          alt=""
+          id="obstacle5"
+        />
+        <img
+          src="../images/obstacle.png"
+          class="obstacle-image hidden"
+          alt=""
+          id="obstacle6"
+        />
+        <img
+          src="../images/obstacle.png"
+          class="obstacle-image hidden"
+          alt=""
+          id="obstacle7"
+        />
+        <img
+          src="../images/obstacle.png"
+          class="obstacle-image hidden"
+          alt=""
+          id="obstacle8"
+        />
+        <img
+          src="../images/obstacle.png"
+          class="obstacle-image hidden"
+          alt=""
+          id="obstacle9"
+        />
+      </div>
+      <div id="timer">Time left: <span id="countdown">5</span> seconds</div>
+      <button id="startButton">Start</button>
+      <div id="startTimer"><span id="countdown2">3</span></div>
+    </div>
+    <!-- Section 4: Game Over Page -->
+    <div id="game-over">
+      <h1 class="text">Game Over</h1>
+      <div id="game-over-message" class="hidden"></div>
+      <button id="gameOverRestartButton">Restart</button>
+    </div>
+    <!-- Section 5: Congratulations Page -->
+    <div id="congratulations">
+      <div class="congratulations-container">
+        <div>You win the race!</div>
+        <div class="player-image" id="player">
+          <!-- Add an img tag to display the chosen beast image -->
+          <img
+            src=""
+            alt=""
+            class="player-image-congratulation"
+            id="chosen-beast-image"
+          />
+        </div>
+        <div class="text-congratulations">Congratulations!!!!</div>
+        <button id="congratulationsRestartButton">Restart</button>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="../js/index.js"></script>
+  </body>
+</html>
