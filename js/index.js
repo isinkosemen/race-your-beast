@@ -244,7 +244,7 @@ document.addEventListener("DOMContentLoaded", function () {
       chosenBeastImage.src = "../images/beast4.png";
     }
   }
-// this code is referenced from https://www.littlemanproject.com/posts/javascript-confetti/
+  // this code is referenced from https://www.littlemanproject.com/posts/javascript-confetti/
   function showConfetti() {
     let duration = 15 * 1000;
     let animationEnd = Date.now() + duration;
