@@ -1,11 +1,8 @@
 ## Game Project
-This project contains one game using JavaScript, Canvas, HTML, and CSS.
+This project contains one game using JavaScript, HTML, and CSS.
 
 ## Race Your Beast
 In "Race Your Beast", players choose a cat and navigate it through a race track to gather prizes and reach the finish line within a challenging 5-second time limit.
-
-## Game Logo
-!(//images/logo.PNG)
 
 ## Installation
 Clone or download this project, open the index.html file in your browser and enjoy the game.
