@@ -1,251 +1,301 @@
-//Ensure JavaScript code runs only after the HTML document has been completely loaded and parsed.
-document.addEventListener("DOMContentLoaded", function () {
-  // Declare constant to control the visibility of each one of them.
-  const startingPage = document.getElementById("game-start");
-  const characterSelection = document.getElementById("choose-your-beast");
-  const playGame = document.getElementById("level1");
-  const gameOver = document.getElementById("game-over");
-  const congratulations = document.getElementById("congratulations");
+class Game {
+  constructor() {
+    this.startingPage = document.getElementById("game-start");
+    this.characterSelection = document.getElementById("choose-your-beast");
+    this.playGame = document.getElementById("level1");
+    this.gameOver = document.getElementById("game-over");
+    this.congratulations = document.getElementById("congratulations");
+    this.gameOverMessage = document.getElementById("game-over-message");
 
-  // Hide obstacles from the start section. Show them in the game section.
-  const obstaclesOnStartPage = document.querySelectorAll(".obstacle-image");
+    this.obstaclesOnStartPage = document.querySelectorAll(".obstacle-image");
+    this.beastSelector = new BeastSelector();
+    this.selectedBeast = "";
+    this.playerImage = document.getElementById("player");
+    this.backgroundImage = document.querySelector(".background-image-level1");
+    this.startGameButton = document.getElementById("startGameButton");
+    this.startButton = document.getElementById("startButton");
 
-  function hideObstacles() {
-    obstaclesOnStartPage.forEach((obstacle) => {
+    this.startButton.addEventListener("click", () => {
+      this.handleStartButton();
+    });
+
+    this.obstacles = [
+      document.getElementById("obstacle1"),
+      document.getElementById("obstacle2"),
+      document.getElementById("obstacle3"),
+      document.getElementById("obstacle4"),
+      document.getElementById("obstacle5"),
+      document.getElementById("obstacle6"),
+      document.getElementById("obstacle7"),
+      document.getElementById("obstacle8"),
+      document.getElementById("obstacle9"),
+    ];
+
+    this.countdownElement = document.getElementById("countdown");
+    this.startCountdownElement = document.getElementById("startTimer");
+    this.timeLimit = 5;
+    this.countdown = this.timeLimit;
+    this.initialCountdown = this.timeLimit;
+    this.timerInterval = null;
+    this.gameStarted = false;
+    this.currentIndex = 0;
+
+    this.startGameButton.addEventListener("click", () => {
+      this.handleGameStartButton();
+    });
+
+    this.startButton.addEventListener("click", () => {
+      this.handleStartButton();
+    });
+
+    this.obstacles[this.currentIndex].style.display = "block";
+    setInterval(() => this.checkCollision(), 10);
+
+    this.gameEnded = false;
+    this.displayGameOverMessage = true;
+
+    this.gameOverRestartButton = document.getElementById(
+      "gameOverRestartButton"
+    );
+    this.congratulationsRestartButton = document.getElementById(
+      "congratulationsRestartButton"
+    );
+
+    this.gameOverRestartButton.addEventListener("click", () => {
+      this.handleGameOverRestartButton();
+      location.reload();
+    });
+
+    this.congratulationsRestartButton.addEventListener("click", () => {
+      this.handleCongratulationsRestartButton();
+      location.reload();
+    });
+
+    this.setupInitialPage();
+
+    
+  }
+
+  setupInitialPage() {
+    this.startingPage.style.display = "block";
+    this.characterSelection.style.display = "none";
+    this.playGame.style.display = "none";
+    this.gameOver.style.display = "none";
+    this.congratulations.style.display = "none";
+
+    this.hideObstacles();
+  }
+
+  hideObstacles() {
+    this.obstaclesOnStartPage.forEach((obstacle) => {
       obstacle.classList.add("hidden");
     });
   }
 
-  function showObstacles() {
-    obstaclesOnStartPage.forEach((obstacle) => {
+  showObstacles() {
+    this.obstaclesOnStartPage.forEach((obstacle) => {
       obstacle.classList.remove("hidden");
     });
   }
 
-  //Selection of beast by clicking
-  class BeastSelector {
-    constructor() {
-      this.beast1 = document.getElementById("beast1");
-      this.beast2 = document.getElementById("beast2");
-      this.beast3 = document.getElementById("beast3");
-      this.beast4 = document.getElementById("beast4");
+  handleGameStartButton() {
+    this.startingPage.style.display = "none";
+    this.characterSelection.style.display = "block";
+    this.playGame.style.display = "none";
+    this.gameOver.style.display = "none";
+    this.congratulations.style.display = "none";
 
-      this.setupEventListeners();
-    }
-
-    setupEventListeners() {
-      this.beast1.addEventListener("click", () => this.selectBeast("beast1"));
-      this.beast2.addEventListener("click", () => this.selectBeast("beast2"));
-      this.beast3.addEventListener("click", () => this.selectBeast("beast3"));
-      this.beast4.addEventListener("click", () => this.selectBeast("beast4"));
-    }
-
-    selectBeast(beast) {
-      // Set the selected beast in a variable
-      selectedBeast = beast;
-
-      characterSelection.style.display = "none";
-      playGame.style.display = "block";
-      // Update the chosen beast image
-      updateChosenBeastImage();
-    }
-  }
-
-  let selectedBeast = ""; // Variable to store the selected beast
-  const playerImage = document.getElementById("player");
-
-  // Function to update the chosen beast image
-  function updateChosenBeastImage() {
-    if (selectedBeast === "beast1") {
-      playerImage.src = "../images/player1-image.png";
-    } else if (selectedBeast === "beast2") {
-      playerImage.src = "../images/player2-image.png";
-    } else if (selectedBeast === "beast3") {
-      playerImage.src = "../images/player3-image.png";
-    } else if (selectedBeast === "beast4") {
-      playerImage.src = "../images/player4-image.png";
-    }
-  }
-
-  // Creating a new instance of class for the beast selection
-  const beastSelector = new BeastSelector();
-
-  function showStartGameSection() {
-    const startingPage = document.getElementById("game-start");
-    const characterSelection = document.getElementById("choose-your-beast");
-    const playGame = document.getElementById("level1");
-    const gameOver = document.getElementById("game-over");
-    const congratulations = document.getElementById("congratulations");
-
-    startingPage.style.display = "block";
-    characterSelection.style.display = "none";
-    playGame.style.display = "none";
-    gameOver.style.display = "none";
-    congratulations.style.display = "none";
-
-    hideObstacles();
-  }
-  // Call the function to show the "Start Game" section
-  showStartGameSection();
-
-  // Click Start Button
-  const startGameButton = document.getElementById("startGameButton");
-  startGameButton.addEventListener("click", () => {
-    startingPage.style.display = "none";
-    characterSelection.style.display = "block";
-    playGame.style.display = "none";
-    gameOver.style.display = "none";
-    congratulations.style.display = "none";
+    this.resetGame();
 
     // Show obstacles when transitioning to the game page
-    showObstacles();
-  });
+    this.showObstacles();
+    this.playerImage.style.left = "160px";
+    this.playerImage.style.top = "420px";
 
-  // Initially hide all obstacles on page load
-  hideObstacles();
+    this.backgroundImage.addEventListener("mousemove", (e) => {
+      if (this.gameStarted && !this.gameEnded) {
+        const mouseX = e.clientX;
+        const mouseY = e.clientY;
 
-  const backgroundImage = document.querySelector(".background-image-level1");
-  const startButton = document.getElementById("startButton");
-  playerImage.style.left = "160px";
-  playerImage.style.top = "420px";
-
-  const obstacles = [
-    document.getElementById("obstacle1"),
-    document.getElementById("obstacle2"),
-    document.getElementById("obstacle3"),
-    document.getElementById("obstacle4"),
-    document.getElementById("obstacle5"),
-    document.getElementById("obstacle6"),
-    document.getElementById("obstacle7"),
-    document.getElementById("obstacle8"),
-    document.getElementById("obstacle9"),
-  ];
-
-  backgroundImage.addEventListener("mousemove", (e) => {
-    if (gameStarted) {
-      const mouseX = e.clientX;
-      const mouseY = e.clientY;
-
-      playerImage.style.left = mouseX - 500 + "px";
-      playerImage.style.top = mouseY + "px";
-    }
-  });
-
-  const countdownElement = document.getElementById("countdown");
-  const startCountdownElement = document.getElementById("startTimer");
-
-  let timeLimit = 5;
-  let countdown = timeLimit;
-  let timerInterval;
-  let gameStarted = false;
-  //let readinessCountdown = 1;
-  //let startCountdown = 1;
-
-  function updatePlayerPosition(e) {
-    const mouseX = e.clientX;
-    const mouseY = e.clientY;
-
-    playerImage.style.left = mouseX + "px";
-    playerImage.style.top = mouseY + "px";
+        this.playerImage.style.left = mouseX - 500 + "px";
+        this.playerImage.style.top = mouseY + "px";
+      }
+    });
   }
 
-  startButton.addEventListener("click", () => {
-    setTimeout(() => {
-      gameStarted = true;
-      startButton.disabled = true;
-      startButton.textContent = "Start";
-      timerInterval = setInterval(updateCountdown, 1000);
-    }, 5000);
-  });
+  showAllObstacles() {
+    this.obstacles.forEach((obstacle) => {
+      obstacle.style.display = "block";
+    });
+  }
 
-  startButton.addEventListener("click", () => {
-    startButton.disabled = true;
-    startButton.textContent = "Starting...";
+  updatePlayerImage(imageSrc) {
+    this.playerImage.src = imageSrc;
+  }
+
+handleStartButton() {
+  this.startButton.addEventListener("click", () => {
+    this.startButton.disabled = true;
+    this.startButton.textContent = "Starting...";
 
     let startCount = 3;
-    startCountdownElement.textContent = startCount;
-    startCountdownElement.style.display = "block";
+    this.startCountdownElement.textContent = startCount;
+    this.startCountdownElement.style.display = "block";
 
     const startCountdownInterval = setInterval(() => {
       if (startCount > 1) {
         startCount--;
-        startCountdownElement.textContent = startCount;
+        this.startCountdownElement.textContent = startCount;
       } else if (startCount === 1) {
         startCount--;
-        startCountdownElement.textContent = "Go!";
+        this.startCountdownElement.textContent = "Go!";
       } else {
-        startCountdownElement.style.display = "none";
+        this.startCountdownElement.style.display = "none";
         clearInterval(startCountdownInterval);
+        this.startButton.textContent = "Start";
+
+        // Set gameStarted to true when the game starts
+        this.gameStarted = true;
+        console.log(this.gameStarted); 
+
+        let gameTimeout = 5;
+        this.countdownElement.textContent = gameTimeout;
+
+        const gameTimeoutInterval = setInterval(() => {
+          gameTimeout--;
+          this.countdownElement.textContent = gameTimeout;
+
+          if (gameTimeout === 0) {
+            clearInterval(gameTimeoutInterval);
+            this.handleGameTimeout();
+          }
+        }, 1000);
+
+        this.showAllObstacles();
+
+        // Add event listener for mousemove to move the player image
+        this.handleMouseMove();
+
+        // Add event listeners for obstacle collisions
+        this.setupObstacleCollisions();
       }
     }, 1000);
   });
+}
 
-  let currentIndex = 0;
+  // Add this method to handle the mousemove event
+  handleMouseMove() {
+    window.addEventListener("mousemove", (e) => {
+      if (this.gameStarted && !this.gameEnded) {
+        const mouseX = e.clientX;
+        const mouseY = e.clientY;
 
-  function checkCollision() {
-    const playerRect = playerImage.getBoundingClientRect();
-    const obstacleRect = obstacles[currentIndex].getBoundingClientRect();
+        this.playerImage.style.left = mouseX - 500 + "px";
+        this.playerImage.style.top = mouseY + "px";
+      }
+    });
+  }
 
-    if (
-      playerRect.left < obstacleRect.right &&
-      playerRect.right > obstacleRect.left &&
-      playerRect.top < obstacleRect.bottom &&
-      playerRect.bottom > obstacleRect.top
-    ) {
-      // Collision
-      obstacles[currentIndex].style.display = "none"; // Hide the current obstacle
-      currentIndex++; // Move to the next obstacles
+  handleGameTimeout() {
+    if (!this.gameEnded) {
+      this.displayGameOver();
+    }
+  }
 
-      if (currentIndex < obstacles.length) {
-        // Show the next obstacle
-        obstacles[currentIndex].style.display = "block";
+  setupObstacleCollisions() {
+    this.obstacles.forEach((obstacle, index) => {
+      obstacle.addEventListener("mouseover", () => {
+        this.handleObstacleCollision(index);
+      });
+    });
+  }
+
+  updateCountdown() {
+    if (this.gameStarted && !this.gameEnded) {
+      if (this.countdown > 0) {
+        this.countdown--;
+        this.countdownElement.textContent = this.countdown;
       } else {
-        // All obstacles cleared, game completed
-        setTimeout(() => {
-          alert("Congratulations! You cleared all obstacles!");
-          showCongratulations();
-          showConfetti();
-        }, 1000);
+        this.gameEnded = true;
+
+        if (this.congratulations.style.display !== "block") {
+          alert("Time's up! Game over.");
+          this.displayGameOver();
+        }
+
+        clearInterval(this.timerInterval);
       }
     }
   }
 
-  function showCongratulations() {
-    const congratulations = document.getElementById("congratulations");
-    const congratulationsRestartButton = document.getElementById(
-      "congratulationsRestartButton"
-    );
+  displayGameOver() {
+    if (!this.gameEnded) {
+      this.gameEnded = true;
 
-    // Hide game elements (level1) and other elements you want to hide
-    const gamePage = document.getElementById("level1");
-    const countdownElement = document.getElementById("countdown");
-    const startButton = document.getElementById("startButton");
+      if (this.congratulations.style.display !== "block") {
+        this.gameOver.style.display = "block";
+        this.gameOverMessage.classList.remove("hidden");
+        this.gameOverRestartButton.classList.remove("hidden");
 
-    gamePage.style.display = "none";
-    countdownElement.style.display = "none";
-    startButton.style.display = "none";
+        const gamePage = document.getElementById("level1");
+        gamePage.style.display = "none";
+      }
+    }
+  }
 
-    // Hide the game-over section
-    const gameOver = document.getElementById("game-over");
-    gameOver.style.display = "none";
+  checkCollision() {
+    if (this.gameStarted) {
+      const playerRect = this.playerImage.getBoundingClientRect();
+      const obstacleRect =
+        this.obstacles[this.currentIndex].getBoundingClientRect();
 
-    congratulations.style.display = "block";
-    congratulationsRestartButton.classList.remove("hidden");
+      if (
+        playerRect.left < obstacleRect.right &&
+        playerRect.right > obstacleRect.left &&
+        playerRect.top < obstacleRect.bottom &&
+        playerRect.bottom > obstacleRect.top
+      ) {
+        this.obstacles[this.currentIndex].style.display = "none";
+        this.currentIndex++;
+
+        if (this.currentIndex < this.obstacles.length) {
+          this.obstacles[this.currentIndex].style.display = "block";
+        } else {
+          setTimeout(() => {
+            alert("Congratulations! You cleared all obstacles!");
+            this.showCongratulations();
+            this.showConfetti();
+          }, 1000);
+        }
+      }
+    }
+    // Check for collisions continuously
+    requestAnimationFrame(() => this.checkCollision());
+  }
+
+  showCongratulations() {
+    this.playGame.style.display = "none";
+    this.countdownElement.style.display = "none";
+    this.startButton.style.display = "none";
+
+    this.gameOver.style.display = "none";
+    this.congratulations.style.display = "block";
+    this.congratulationsRestartButton.classList.remove("hidden");
 
     const chosenBeastImage = document.getElementById("chosen-beast-image");
 
-    if (selectedBeast === "beast1") {
+    if (this.selectedBeast === "beast1") {
       chosenBeastImage.src = "../images/player1-image.png";
-    } else if (selectedBeast === "beast2") {
+    } else if (this.selectedBeast === "beast2") {
       chosenBeastImage.src = "../images/beast2.png";
-    } else if (selectedBeast === "beast3") {
+    } else if (this.selectedBeast === "beast3") {
       chosenBeastImage.src = "../images/beast3.png";
-    } else if (selectedBeast === "beast4") {
+    } else if (this.selectedBeast === "beast4") {
       chosenBeastImage.src = "../images/beast4.png";
     }
   }
-  // this code is referenced from https://www.littlemanproject.com/posts/javascript-confetti/
-  function showConfetti() {
+
+  showConfetti() {
     let duration = 15 * 1000;
     let animationEnd = Date.now() + duration;
     let defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
@@ -254,7 +304,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return Math.random() * (max - min) + min;
     }
 
-    let interval = setInterval(function () {
+    let interval = setInterval(() => {
       let timeLeft = animationEnd - Date.now();
 
       if (timeLeft <= 0) {
@@ -262,7 +312,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       let particleCount = 50 * (timeLeft / duration);
-      // since particles fall down, start a bit higher than random
       confetti(
         Object.assign({}, defaults, {
           particleCount,
@@ -278,88 +327,59 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 250);
   }
 
-  obstacles[currentIndex].style.display = "block";
-  setInterval(checkCollision, 10);
-
-  let gameEnded = false;
-
-  function updateCountdown() {
-    if (gameStarted && !gameEnded) {
-      if (countdown > 0) {
-        countdown--;
-        countdownElement.textContent = countdown;
-      } else {
-        gameEnded = true;
-
-        if (congratulations.style.display !== "block") {
-          alert("Time's up! Game over.");
-          displayGameOver();
-        }
-
-        clearInterval(timerInterval);
-      }
-    }
+  handleGameOverRestartButton() {
+    this.setupInitialPage();
+    this.resetGame();
   }
 
-  let displayGameOverMessage = true;
-
-  function displayGameOver() {
-    const gameOver = document.getElementById("game-over");
-    const gameOverMessage = document.getElementById("game-over-message");
-    const gameOverRestartButton = document.getElementById(
-      "gameOverRestartButton"
-    );
-
-    if (displayGameOverMessage) {
-      gameOver.style.display = "block";
-      gameOverMessage.classList.remove("hidden");
-      gameOverRestartButton.classList.remove("hidden");
-
-      const gamePage = document.getElementById("level1");
-      gamePage.style.display = "none";
-    }
+  handleCongratulationsRestartButton() {
+    this.setupInitialPage();
+    this.resetGame();
   }
 
-  const gameOverRestartButton = document.getElementById(
-    "gameOverRestartButton"
-  );
-  const congratulationsRestartButton = document.getElementById(
-    "congratulationsRestartButton"
-  );
+  resetGame() {
+    this.countdown = this.initialCountdown; 
+    this.countdownElement.textContent = this.countdown; 
+    this.currentIndex = 0;
+    this.gameEnded = false; 
+    this.showAllObstacles();
+    this.timeLimit = 5; 
 
-  gameOverRestartButton.addEventListener("click", () => {
-    const startingPage = document.getElementById("game-start");
-    const characterSelection = document.getElementById("choose-your-beast");
-    const playGame = document.getElementById("level1");
-    const congratulations = document.getElementById("congratulations");
-
-    startingPage.style.display = "block";
-
-    characterSelection.style.display = "none";
-    playGame.style.display = "none";
-    congratulations.style.display = "none";
-
-    //resetGame();
-  });
-
-  congratulationsRestartButton.addEventListener("click", () => {
-    const startingPage = document.getElementById("game-start");
-    const characterSelection = document.getElementById("choose-your-beast");
-    const playGame = document.getElementById("level1");
-    const congratulations = document.getElementById("congratulations");
-
-    startingPage.style.display = "block";
-    characterSelection.style.display = "none";
-    playGame.style.display = "none";
-    congratulations.style.display = "none";
-
-    resetGame();
-    //window.location.href = window.location.href.split("?")[0];
-  });
-
-  function resetGame() {
-    countdown = timeLimit;
-    countdownElement.textContent = countdown;
-    showObstacles();
+   
+    this.handleStartButton();
   }
+}
+
+class BeastSelector {
+  constructor(game) {
+    this.game = game;
+    this.beast1 = document.getElementById("beast1");
+    this.beast2 = document.getElementById("beast2");
+    this.beast3 = document.getElementById("beast3");
+    this.beast4 = document.getElementById("beast4");
+
+    this.setupEventListeners();
+  }
+
+  setupEventListeners() {
+    this.beast1.addEventListener("click", () => this.selectBeast("beast1", "../images/player1-image.png"));
+    this.beast2.addEventListener("click", () => this.selectBeast("beast2", "../images/beast2.png"));
+    this.beast3.addEventListener("click", () => this.selectBeast("beast3", "../images/beast3.png"));
+    this.beast4.addEventListener("click", () => this.selectBeast("beast4", "../images/beast4.png"));
+  }
+
+  selectBeast(beast, imageSrc) {
+    this.game.selectedBeast = beast; 
+    this.game.characterSelection.style.display = "none";
+    this.game.playGame.style.display = "block";
+    this.game.showObstacles();
+
+    this.game.updatePlayerImage(imageSrc);
+  }
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+
+  const game = new Game();
+  const beastSelector = new BeastSelector(game);
 });
